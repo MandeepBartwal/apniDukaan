@@ -8,14 +8,14 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, FormsModule,ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
 export class ProductsComponent implements OnInit {
   isSidePannelVisible: boolean = false;
   createProductForm: FormGroup = new FormGroup({});
-  constructor(public _formBuilder: FormBuilder, private _productService: ProductService, public _toastr: ToastrService){}
+  constructor(public _formBuilder: FormBuilder, private _productService: ProductService, public _toastr: ToastrService) { }
   prodouctObj: any = {
     "productId": 0,
     "productSku": "",
@@ -28,7 +28,8 @@ export class ProductsComponent implements OnInit {
     "categoryId": 0,
     "productImageUrl": ""
   };
-  productCategories: any[] =[]
+  productCategories: any[] = [];
+  productList: any[] = [];
   ngOnInit(): void {
     this.createProductForm = this._formBuilder.group({
       productSku: [''],
@@ -39,14 +40,15 @@ export class ProductsComponent implements OnInit {
       createdDatevenmo: [''],
       deliveryTimeSpan: [''],
       productImageUrl: [''],
-      categoryId:[0]
+      categoryId: [0]
     });
 
-    this.getProductCategories()
+    this.getProductCategories();
+    this.fetchProducts()
   }
 
-  public getProductCategories(){
-    this._productService.getProductCategories().subscribe((res:any)=>{
+  public getProductCategories() {
+    this._productService.getProductCategories().subscribe((res: any) => {
       this.productCategories = res.data;
     })
   }
@@ -54,16 +56,37 @@ export class ProductsComponent implements OnInit {
     this._toastr.success(message, 'Toastr fun!');
   }
 
-  public createProduct(){
-    console.log(this.createProductForm.value);
-    
-    this._productService.createProduct(this.createProductForm.value).subscribe((res:any)=>{
-      if(res.result){
+  public createProduct() {
+    this._productService.createProduct(this.createProductForm.value).subscribe((res: any) => {
+      if (res.result) {
         this.showSuccess(res.message);
       }
     })
   }
- 
+
+  public fetchProducts() {
+    this._productService.fetchProducts().subscribe((res: any) => {
+      this.productList = res.data;
+    })
+  }
+
+  public editProduct() {
+    this._productService.upadteProduct(this.createProductForm.value).subscribe((res: any) => {
+      console.log(res.data);
+    })
+  }
+
+  public deleteProduct(productId: string) {
+    this._productService.deleteProduct(productId).subscribe((res: any) => {
+      console.log(res);
+      if (res.result) {
+        let index = this.productList.findIndex(item => item._id === productId);
+        this.productList.splice(index, 1)
+      }
+    })
+  }
+
+
 
   addNewProdoct() {
     this.isSidePannelVisible = true;

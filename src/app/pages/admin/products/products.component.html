@@ -13,13 +13,14 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-3" *ngFor="let product of productList">
                         <div class="product-card">
-                            <img src="https://via.placeholder.com/400x300" alt="Product Image" class="product-image">
+                            <img [src]="product.productImageUrl" alt="Product Image" class="product-image">
                             <div class="product-details">
-                                <h4 class="product-title">Product Name</h4>
-                                <p class="product-price">$19.99</p>
-                                <button class="btn btn-add-to-cart">Add to Cart</button>
+                                <h4 class="product-title">{{product.productName}}</h4>
+                                <p class="product-price">{{product.productPrice | currency : 'INR'}}</p>
+                                <button class="btn btn-add-to-cart mx-2" (click)="editProduct()">edit</button>
+                                <button class="btn btn-danger" (click)="deleteProduct(product.productId)">delete</button>
                             </div>
                         </div>
                     </div>
@@ -104,7 +105,8 @@
                         </div>
                         <div class="col-md-12">
                             <div class="edit-pro-buttons">
-                                <button type="submit" class="btn btn-success" (click)="createProduct()">Create Product</button>
+                                <button type="submit" class="btn btn-success" (click)="createProduct()">Create
+                                    Product</button>
                                 <button type="button" class="btn btn-secondary">Reset</button>
                             </div>
                         </div>

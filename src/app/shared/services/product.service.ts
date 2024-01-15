@@ -16,9 +16,19 @@ export class ProductService {
     return this._httpClient.get(`${environment.apiURL}GetAllCategory`)
   };
 
-  createProduct(data:any): Observable<any> {
+  createProduct(data: any): Observable<any> {
     return this._httpClient.post(`${environment.apiURL}CreateProduct`, data)
   }
 
+  fetchProducts(): Observable<any> {
+    return this._httpClient.get(`${environment.apiURL}GetAllProducts`)
+  }
 
+  upadteProduct(data: any): Observable<any> {
+    return this._httpClient.post(`${environment.apiURL}UpadteProduct`, data)
+  }
+
+  deleteProduct(productId: string): Observable<any> {
+    return this._httpClient.get(`${environment.apiURL}/DeleteProductById?id=${productId}`)
+  }
 }
