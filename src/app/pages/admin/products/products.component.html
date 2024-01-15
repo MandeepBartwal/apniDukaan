@@ -1,0 +1,115 @@
+<div class="row">
+    <div [ngClass]="isSidePannelVisible ? 'col-8': 'col-12'">
+        <div class="card">
+            <div class="card-header bg-primary">
+                <div class="row">
+                    <div class="col-6">
+                        Product List
+                    </div>
+                    <div class="col-6 text-end">
+                        <button class="btn btn-success btn-sm" (click)="addNewProdoct()">New</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="product-card">
+                            <img src="https://via.placeholder.com/400x300" alt="Product Image" class="product-image">
+                            <div class="product-details">
+                                <h4 class="product-title">Product Name</h4>
+                                <p class="product-price">$19.99</p>
+                                <button class="btn btn-add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-4" *ngIf="isSidePannelVisible">
+        <div class="card">
+            <div class="card-header bg-primary">
+                <div class="row">
+                    <div class="col-6">
+                        New Product List
+                    </div>
+                    <div class="col-6 text-end">
+                        <button class="btn btn-danger btn-sm"
+                            (click)="isSidePannelVisible = !isSidePannelVisible">close</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="createProductForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-box">
+                                <label> SKU</label>
+                                <input type="text" placeholder="SKU" class="form-control"
+                                    [formControlName]="'productSku'">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-box">
+                                <label>Name</label>
+                                <input type="text" placeholder="Name" class="form-control"
+                                    [formControlName]="'productName'">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-box">
+                                <label>Short Name</label>
+                                <input type="text" placeholder="Short Name" class="form-control"
+                                    [formControlName]="'productShortName'">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-box">
+                                <label>Price</label>
+                                <input type="text" placeholder="Price" class="form-control"
+                                    [formControlName]="'productPrice'">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-box">
+                                <label>Category</label>
+                                <select name="Category" id="categoryId" [formControlName]="'categoryId'">
+                                    <option *ngFor="let category of productCategories" [value]="category.categoryId">
+                                        {{category.categoryName}}</option>"
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-box">
+                                <label>Delivery Time Span</label>
+                                <input type="text" placeholder="deliveryTimeSpan" class="form-control"
+                                    [formControlName]="'deliveryTimeSpan'">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-box">
+                                <label>ImageUrl</label>
+                                <input type="text" placeholder="productImageUrl" class="form-control"
+                                    [formControlName]="'productImageUrl'">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-box">
+                                <label for="productDescription">Product Description</label>
+                                <textarea class="form-control" [formControlName]="'productDescription'"
+                                    id="productDescription" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="edit-pro-buttons">
+                                <button type="submit" class="btn btn-success" (click)="createProduct()">Create Product</button>
+                                <button type="button" class="btn btn-secondary">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
