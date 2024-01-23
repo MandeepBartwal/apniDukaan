@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -30,5 +30,14 @@ export class ProductService {
 
   deleteProduct(productId: string): Observable<any> {
     return this._httpClient.get(`${environment.apiURL}/DeleteProductById?id=${productId}`)
+  }
+
+  // Get All Categories
+
+  getAllCategories(): Observable<any> {
+    return this._httpClient.get(`${environment.apiURL}/GetAllCategory`).pipe(
+      map((res: any) => {
+        return res.data
+      }))
   }
 }

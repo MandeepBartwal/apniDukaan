@@ -19,8 +19,9 @@
                             <div class="product-details">
                                 <h4 class="product-title">{{product.productName}}</h4>
                                 <p class="product-price">{{product.productPrice | currency : 'INR'}}</p>
-                                <button class="btn btn-add-to-cart mx-2" (click)="editProduct()">edit</button>
-                                <button class="btn btn-danger" (click)="deleteProduct(product.productId)">delete</button>
+                                <button class="btn btn-add-to-cart mx-2" (click)="editProduct(product)">edit</button>
+                                <button class="btn btn-danger"
+                                    (click)="deleteProduct(product.productId)">delete</button>
                             </div>
                         </div>
                     </div>
@@ -105,8 +106,12 @@
                         </div>
                         <div class="col-md-12">
                             <div class="edit-pro-buttons">
-                                <button type="submit" class="btn btn-success" (click)="createProduct()">Create
-                                    Product</button>
+                                <button *ngIf="!isUpdatingPrdouct; else updateTemplate" type="submit"
+                                    class="btn btn-success" (click)="createProduct()">Create Product</button>
+                                <ng-template #updateTemplate>
+                                    <button type="submit" class="btn btn-success" (click)="updateProduct()">Update
+                                        Product</button>
+                                </ng-template>
                                 <button type="button" class="btn btn-secondary">Reset</button>
                             </div>
                         </div>

@@ -1,1 +1,16 @@
-<p>categories works!</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Category Name</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let category of Products$ | async">
+            <th scope="row">{{category.categoryId}}</th>
+            <td>{{category.categoryName}}</td>
+            <td>edit /delete</td>
+        </tr>
+    </tbody>
+</table>

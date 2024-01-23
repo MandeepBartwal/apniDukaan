@@ -1,5 +1,5 @@
 import { Products } from './products.types';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductService } from '../../../shared/services/product.service';
@@ -8,12 +8,13 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgIf],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
 export class ProductsComponent implements OnInit {
   isSidePannelVisible: boolean = false;
+  isUpdatingPrdouct: boolean = false;
   createProductForm: FormGroup = new FormGroup({});
   constructor(public _formBuilder: FormBuilder, private _productService: ProductService, public _toastr: ToastrService) { }
   prodouctObj: any = {
@@ -70,9 +71,15 @@ export class ProductsComponent implements OnInit {
     })
   }
 
-  public editProduct() {
+  public editProduct(product: any) {
+    this.isUpdatingPrdouct = true;
+    this.isSidePannelVisible = true;
+    this.createProductForm.patchValue(product)
+  }
+
+  public updateProduct() {
     this._productService.upadteProduct(this.createProductForm.value).subscribe((res: any) => {
-      console.log(res.data);
+      this.fetchProducts();
     })
   }
 
@@ -85,8 +92,6 @@ export class ProductsComponent implements OnInit {
       }
     })
   }
-
-
 
   addNewProdoct() {
     this.isSidePannelVisible = true;
